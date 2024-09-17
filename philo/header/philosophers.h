@@ -6,7 +6,7 @@
 /*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/17 18:49:37 by saperrie         ###   ########.fr       */
+/*   Updated: 2024/09/17 21:43:55 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <sys/time.h>
 
 # define TOO_FEW_ARGS "too few args\nor too many..\n"
 # define THINK "is thinking"
@@ -26,8 +28,9 @@
 
 typedef struct s_scene
 {
-	t_philo			*philo;
+	struct s_philo			*philo;
 	unsigned int	nbr_philo;
+	long			start_time;
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
@@ -38,14 +41,15 @@ typedef struct s_scene
 typedef struct s_philo
 {
 	t_scene			*scene;
-	unsigned int	philo_id;
+	unsigned int	id;
 	// unsigned int	next_philo_id;
+	pthread_t		thread;
 	int				fork;
 	pthread_mutex_t	fork_mtx;
 	int				*next_fork;
 	pthread_mutex_t	*next_fork_mtx;
 	long			latest_meal_time;
-	bool			is_dead;
+	int			is_dead;
 }	t_philo;
 
 #endif
