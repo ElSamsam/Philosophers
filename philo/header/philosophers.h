@@ -6,7 +6,7 @@
 /*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/17 17:23:33 by saperrie         ###   ########.fr       */
+/*   Updated: 2024/09/17 18:49:37 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <unistd.h>
-
 
 # define TOO_FEW_ARGS "too few args\nor too many..\n"
 # define THINK "is thinking"
