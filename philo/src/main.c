@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:06:51 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/18 18:10:02 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 19:02:44 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ void	eat(t_philo *philo)
 		}
 		pthread_mutex_unlock(philo->next_fork_mtx);
 	}
-	print_phi_state(philo->id, EAT, philo->scene);
+	print_phi_state(philo->id, EAT, philo->scene, 0);
+	philo->latest_meal_time = get_time() - philo->scene->start_time;
 	ft_sleep(philo->scene->time_to_eat);
 	pthread_mutex_lock(&philo->fork_mtx);
 	philo->fork = 1;
@@ -145,17 +146,55 @@ void	*routine(void *philosopher)
 	t_philo	*philo;
 
 	philo = philosopher;
-	print_phi_state(philo->id, THINK, philo->scene);
+	print_phi_state(philo->id, THINK, philo->scene, 0);
 	if (philo->id % 2 != 0)
 		ft_sleep(0.8 * philo->scene->time_to_eat);
-	while (1)
+	while (philo->is_dead == 0)
 	{
 		eat(philo);
-		print_phi_state(philo->id, SLEEP, philo->scene);
+		print_phi_state(philo->id, SLEEP, philo->scene, 0);
 		ft_sleep(philo->scene->time_to_sleep);
-		print_phi_state(philo->id, THINK, philo->scene);
+		print_phi_state(philo->id, THINK, philo->scene, 0);
 	}
 	return (NULL);
+}
+
+void	update_death_status(t_scene *scene)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (i < scene->nbr_philo)
+		scene->philo[i++].is_dead = 1;
+}
+
+int	is_dead(int i, t_scene *scene, long current_time)
+{
+	long	death_time;
+
+	death_time = scene->philo->latest_meal_time + scene->time_to_die;
+	if (death_time < current_time)
+	{
+		update_death_status(scene);
+		print_phi_state(i + 1, DIE, scene, 1);
+		return (1);
+	}
+	return (0);
+}
+
+void	status_check(t_scene *scene)
+{
+	unsigned int	i;
+
+	while (1)
+	{
+		i = 0;
+		while (i < scene->nbr_philo)
+		{
+			if (is_dead(i, scene, get_time() - scene->start_time))
+				return ;
+		}
+	}
 }
 
 int	start_simulation(t_scene *scene)
@@ -174,6 +213,7 @@ int	start_simulation(t_scene *scene)
 		}
 		i += 1;
 	}
+	status_check(scene);
 	while (i > 0)
 		pthread_join(scene->philo[--i].thread, NULL);
 	return (0);

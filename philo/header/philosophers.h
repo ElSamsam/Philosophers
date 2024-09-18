@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/18 17:37:42 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 19:03:56 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ typedef struct s_philo
 
 void	ft_sleep(long time);
 long	get_time(void);
-void	print_phi_state(int id, char *action, t_scene *scene);
+void	print_phi_state(int id, char *action, t_scene *scene, int state);
 
 #endif
