@@ -11,7 +11,8 @@ LFLAGS =
 SRC_DIR = src
 OBJECT_DIR = .obj/
 
-OBJECTS = $(patsubst ${SRC_DIR}/%.c,${OBJECT_DIR}%.o, \
+OBJECTS = $(patsubst ${SRC_DIR}/%.c,${OBJECT_DIR}%.o,\
+	${SRC_DIR}/utils.c \
 	${SRC_DIR}/main.c \
 	)
 

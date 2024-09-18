@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:06:51 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/17 21:49:39 by saperrie         ###   ########.fr       */
+/*   Updated: 2024/09/18 17:03:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	ft_atoi(char const *nptr)
 	return (result * sign);
 }
 
-
 void	free_all(int errno, int i, t_scene *scene)
 {
 	if (i != 0 && errno <= 1)
@@ -58,8 +57,8 @@ void	free_all(int errno, int i, t_scene *scene)
 		while (i <= 0)
 			pthread_mutex_destroy(&(scene->philo[i--].fork_mtx));
 	}
-	if (errno <= 2)
-		;
+	// if (errno <= 2)
+		// ;
 	if (errno <= 3)
 		pthread_mutex_destroy(&(scene->stdout_mtx));
 	free(scene->philo);
@@ -106,19 +105,15 @@ int	init_scene(t_scene *scene)
 	return (0);
 }
 
-long	get_time(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
-}
 
 void	*routine(void *philosopher)
 {
 	t_philo	*philo;
 
 	philo = philosopher;
+	printf("timestamp: %ld\n", get_time() - philo->scene->start_time);
+	ft_sleep(1000);
+	printf("timestamp: %ld\n", get_time() - philo->scene->start_time);
 	printf("ID %d\n", philo->id);
 	return (NULL);
 }
