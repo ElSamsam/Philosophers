@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/18 20:29:34 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 00:43:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 typedef struct s_scene
 {
-	struct s_philo			*philo;
-	unsigned int	nbr_philo;
+	struct s_philo	*philo;
+	int				nbr_philo;
 	long			start_time;
 	long			time_to_die;
 	long			time_to_eat;
@@ -42,7 +42,6 @@ typedef struct s_philo
 {
 	t_scene			*scene;
 	unsigned int	id;
-	// unsigned int	next_philo_id;
 	pthread_t		thread;
 	int				fork;
 	pthread_mutex_t	fork_mtx;
@@ -52,11 +51,29 @@ typedef struct s_philo
 	pthread_mutex_t	latest_meal_time_mtx;
 	int				is_dead;
 	pthread_mutex_t	is_dead_mtx;
-	long			meals_eaten;
+	long			nbr_meals_eaten;
 }	t_philo;
 
+// SCENE
+void	*routine(void *philosopher);
+void	eat(t_philo *philo);
+
+// STATUS
+void	status_check(t_scene *scene);
+int		still_alive(t_philo *philo);
+
+// FREE
+void	free_all(int errno, int i, t_scene *scene);
+
+// INIT
+int		init_scene(t_scene *scene);
+int		init_philo(t_scene *scene);
+
+// UTILS
+unsigned int	ft_strlen(char *s);
+int		ft_atoi(char const *nptr);
 void	ft_sleep(long time);
 long	get_time(void);
-void	print_phi_state(int id, char *action, t_scene *scene, int state);
-int		not_dead(t_philo *philo);
+void	print_philo_state(int id, char *action, t_scene *scene, int state);
+
 #endif
