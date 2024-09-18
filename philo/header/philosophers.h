@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/18 19:03:56 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 20:29:34 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ typedef struct s_philo
 	int				*next_fork;
 	pthread_mutex_t	*next_fork_mtx;
 	long			latest_meal_time;
+	pthread_mutex_t	latest_meal_time_mtx;
 	int				is_dead;
+	pthread_mutex_t	is_dead_mtx;
+	long			meals_eaten;
 }	t_philo;
 
 void	ft_sleep(long time);
 long	get_time(void);
 void	print_phi_state(int id, char *action, t_scene *scene, int state);
-
+int		not_dead(t_philo *philo);
 #endif
