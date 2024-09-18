@@ -30,3 +30,10 @@ long	get_time(void)
 	gettimeofday(&tv, NULL);
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
+
+void	print_phi_state(int id, char *action, t_scene *scene)
+{
+	pthread_mutex_lock(&(scene->stdout_mtx));
+	printf("%ld %d %s\n", get_time() - scene->start_time, id, action);
+	pthread_mutex_unlock(&(scene->stdout_mtx));
+}

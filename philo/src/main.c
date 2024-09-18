@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:06:51 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/18 17:03:14 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/18 18:10:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,16 +105,56 @@ int	init_scene(t_scene *scene)
 	return (0);
 }
 
+void	eat(t_philo *philo)
+{
+	int	forks_in_my_hands[2];
+
+	forks_in_my_hands[0] = 0;
+	forks_in_my_hands[1] = 0;
+	while (!forks_in_my_hands[0] || !forks_in_my_hands[1])
+	{
+		pthread_mutex_lock(&philo->fork_mtx);
+		if (philo->fork == 1)
+		{
+			philo->fork = 0;
+			forks_in_my_hands[0] = 1;
+		}
+		pthread_mutex_unlock(&philo->fork_mtx);
+		pthread_mutex_lock(philo->next_fork_mtx);
+		if (*(philo->next_fork) == 1)
+		{
+			*(philo->next_fork) = 0;
+			forks_in_my_hands[1] = 1;
+		}
+		pthread_mutex_unlock(philo->next_fork_mtx);
+	}
+	print_phi_state(philo->id, EAT, philo->scene);
+	ft_sleep(philo->scene->time_to_eat);
+	pthread_mutex_lock(&philo->fork_mtx);
+	philo->fork = 1;
+	pthread_mutex_unlock(&philo->fork_mtx);
+	pthread_mutex_lock(philo->next_fork_mtx);
+	*(philo->next_fork) = 1;
+	pthread_mutex_unlock(philo->next_fork_mtx);
+	forks_in_my_hands[1] = 0;
+	forks_in_my_hands[0] = 0;
+}
 
 void	*routine(void *philosopher)
 {
 	t_philo	*philo;
 
 	philo = philosopher;
-	printf("timestamp: %ld\n", get_time() - philo->scene->start_time);
-	ft_sleep(1000);
-	printf("timestamp: %ld\n", get_time() - philo->scene->start_time);
-	printf("ID %d\n", philo->id);
+	print_phi_state(philo->id, THINK, philo->scene);
+	if (philo->id % 2 != 0)
+		ft_sleep(0.8 * philo->scene->time_to_eat);
+	while (1)
+	{
+		eat(philo);
+		print_phi_state(philo->id, SLEEP, philo->scene);
+		ft_sleep(philo->scene->time_to_sleep);
+		print_phi_state(philo->id, THINK, philo->scene);
+	}
 	return (NULL);
 }
 
