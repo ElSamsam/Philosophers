@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/19 00:43:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/20 00:29:37 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,26 @@ typedef struct s_philo
 }	t_philo;
 
 // SCENE
-void	*routine(void *philosopher);
-void	eat(t_philo *philo);
+void			*routine(void *philosopher);
+void			eat(t_philo *philo);
 
 // STATUS
-void	status_check(t_scene *scene);
-int		still_alive(t_philo *philo);
+void			status_check(t_scene *scene);
+int				dead_philos(t_philo *philo);
 
 // FREE
-void	free_all(int errno, int i, t_scene *scene);
+void			free_all(int errno, int i, t_scene *scene);
 
 // INIT
-int		init_scene(t_scene *scene);
-int		init_philo(t_scene *scene);
+int				init_scene(t_scene *scene);
+int				init_philo(t_scene *scene);
 
 // UTILS
 unsigned int	ft_strlen(char *s);
-int		ft_atoi(char const *nptr);
-void	ft_sleep(long time);
-long	get_time(void);
-void	print_philo_state(int id, char *action, t_scene *scene, int state);
+int				ft_atoi(char const *nptr);
+void			ft_sleep(long time);
+long			get_time(void);
+void			print_philo_state(int id, char *action, t_scene *scene, \
+	int state);
 
 #endif

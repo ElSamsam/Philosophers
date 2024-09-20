@@ -12,19 +12,24 @@
 
 #include "philosophers.h"
 
-void	eat(t_philo *philo)
+void	fork_play(t_philo *philo, int *fork_in_my_hand)
 {
-	int	fork_in_my_hand[2];
-
-	fork_in_my_hand[0] = 0;
-	fork_in_my_hand[1] = 0;
 	while (!fork_in_my_hand[0] || !fork_in_my_hand[1])
 	{
+		// one_fork();
+		pthread_mutex_lock(&philo->is_dead_mtx);
+		if(philo->is_dead == 1)
+		{
+			pthread_mutex_unlock(&philo->is_dead_mtx);
+			return ;
+		}
+		pthread_mutex_unlock(&philo->is_dead_mtx);
 		pthread_mutex_lock(&philo->fork_mtx);
 		if (philo->fork == 1)
 		{
 			philo->fork = 0;
 			fork_in_my_hand[0] = 1;
+			print_philo_state(philo->id, FORK, philo->scene, 0);
 		}
 		pthread_mutex_unlock(&philo->fork_mtx);
 		pthread_mutex_lock(philo->next_fork_mtx);
@@ -32,10 +37,20 @@ void	eat(t_philo *philo)
 		{
 			*(philo->next_fork) = 0;
 			fork_in_my_hand[1] = 1;
+			print_philo_state(philo->id, FORK, philo->scene, 0);
 		}
 		pthread_mutex_unlock(philo->next_fork_mtx);
 		usleep(200);
 	}
+}
+
+void	eat(t_philo *philo)
+{
+	int	fork_in_my_hand[2];
+
+	fork_in_my_hand[0] = 0;
+	fork_in_my_hand[1] = 0;
+	fork_play(philo, fork_in_my_hand);
 	print_philo_state(philo->id, EAT, philo->scene, 0);
 	pthread_mutex_lock(&(philo->latest_meal_time_mtx));
 	philo->latest_meal_time = get_time() - philo->scene->start_time;
@@ -60,7 +75,7 @@ void	*routine(void *philosopher)
 	print_philo_state(philo->id, THINK, philo->scene, 0);
 	if (philo->id % 2 != 0)
 		ft_sleep(0.8 * philo->scene->time_to_eat);
-	while (still_alive(philo) == 0)
+	while (dead_philos(philo) == 0)
 	{
 		eat(philo);
 		print_philo_state(philo->id, SLEEP, philo->scene, 0);

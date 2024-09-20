@@ -56,8 +56,8 @@ void	ft_sleep(long time)
 
 	entry_time = get_time();
 	usleep(time * 0.8 * 1000);
-	while(get_time() < time + entry_time)
-		usleep(100); // THIS VALUE MIGHT CHANGE FOR LATER ADJUSTMENTS i.e.: 50us
+	while (get_time() < time + entry_time)
+		usleep(100);
 	return ;
 }
 
@@ -71,7 +71,7 @@ long	get_time(void)
 
 void	print_philo_state(int id, char *action, t_scene *scene, int state)
 {
-	if (still_alive(&(scene->philo[id - 1])) == 0 && state == 0)
+	if (dead_philos(&(scene->philo[id - 1])) == 0 && state == 0)
 	{
 		pthread_mutex_lock(&(scene->stdout_mtx));
 		printf("%ld %d %s\n", get_time() - scene->start_time, id, action);

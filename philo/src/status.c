@@ -50,7 +50,7 @@ int	is_dead(int i, t_scene *scene, long current_time, int *nbr_philos_out)
 	return (0);
 }
 
-int	still_alive(t_philo *philo)
+int	dead_philos(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->is_dead_mtx));
 	if (philo->is_dead == 0)
@@ -74,7 +74,7 @@ void	status_check(t_scene *scene)
 		i = 0;
 		while (i < scene->nbr_philo)
 		{
-			if (still_alive(&(scene->philo[i])) == 1)
+			if (dead_philos(&(scene->philo[i])) == 1)
 			{
 				i += 1;
 				continue ;

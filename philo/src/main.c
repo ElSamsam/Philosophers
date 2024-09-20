@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:06:51 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/19 00:43:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/20 01:53:02 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(int argc, char *argv[])
 	scene.nbr_of_meals = -1;
 	if (argc == 6)
 		scene.nbr_of_meals = ft_atoi(argv[5]);
-	// print is thinking and is dead at appropriate death time if philo is alone
 	// Handle parsing too
 	if (init_scene(&scene) == 1)
 		return (1);
