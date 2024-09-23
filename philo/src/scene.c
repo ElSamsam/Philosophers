@@ -12,17 +12,13 @@
 
 #include "philosophers.h"
 
-void	fork_play(t_philo *philo, int *fork_in_my_hand)
+char	fork_play(t_philo *philo, int *fork_in_my_hand)
 {
 	while (!fork_in_my_hand[0] || !fork_in_my_hand[1])
 	{
-		// one_fork();
 		pthread_mutex_lock(&philo->is_dead_mtx);
-		if(philo->is_dead == 1)
-		{
-			pthread_mutex_unlock(&philo->is_dead_mtx);
-			return ;
-		}
+		if (philo->is_dead == 1)
+			return (pthread_mutex_unlock(&philo->is_dead_mtx), 0);
 		pthread_mutex_unlock(&philo->is_dead_mtx);
 		pthread_mutex_lock(&philo->fork_mtx);
 		if (philo->fork == 1)
@@ -42,6 +38,7 @@ void	fork_play(t_philo *philo, int *fork_in_my_hand)
 		pthread_mutex_unlock(philo->next_fork_mtx);
 		usleep(200);
 	}
+	return (0);
 }
 
 void	eat(t_philo *philo)

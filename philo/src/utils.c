@@ -22,32 +22,33 @@ unsigned int	ft_strlen(char *s)
 	return (i);
 }
 
-int	ft_atoi(char const *nptr)
+long	super_atoi(char const *input)
 {
 	int			index;
 	int			sign;
-	int long	result;
+	long		result;
 
 	index = 0;
 	sign = 1;
 	result = 0;
-	while (nptr[index] == ' '
-		|| (nptr[index] >= '\t' && nptr[index] <= '\r'))
-		index++;
-	if (nptr[index] == '+' || nptr[index] == '-')
+	while (*input == ' ')
+		input++;
+	if (input[index] == '+' || input[index] == '-')
 	{
-		if (nptr[index] == '-')
+		if (input[index] == '-')
 			sign *= -1;
 		index++;
 	}
-	while (nptr[index] >= '0' && nptr[index] <= '9')
+	while (input[index] >= '0' && input[index] <= '9')
 	{
-		if (result != ((result * 10) + nptr[index] - '0') / 10)
-			return ((sign + 1) / 2 / -1);
-		result = result * 10 + (nptr[index] - '0');
+		result = result * 10 + (input[index] - 48);
+		if ((result > 2147483647 && sign == 1) || result > (long)2147483647 + 1)
+			return (-4000000000);
 		index++;
 	}
-	return (result * sign);
+	if (input[index] == '-' || input[index] == '+')
+		return (-4000000000);
+	return (result * (long)sign);
 }
 
 void	ft_sleep(long time)

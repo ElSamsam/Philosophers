@@ -40,7 +40,7 @@ int	is_dead(int i, t_scene *scene, long current_time, int *nbr_philos_out)
 		print_philo_state(i + 1, DIE, scene, 1);
 		return (1);
 	}
-	if (scene->nbr_of_meals != -1 && nbr_of_meals >= scene->nbr_of_meals)
+	if (scene->nbr_of_meals != -2 && nbr_of_meals >= scene->nbr_of_meals)
 	{
 		pthread_mutex_lock(&scene->philo[i].is_dead_mtx);
 		scene->philo[i].is_dead = 1;

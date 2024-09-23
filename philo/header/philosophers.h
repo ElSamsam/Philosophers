@@ -6,7 +6,7 @@
 /*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/20 00:29:37 by saperrie         ###   ########.fr       */
+/*   Updated: 2024/09/23 02:48:15 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 typedef struct s_scene
 {
 	struct s_philo	*philo;
-	int				nbr_philo;
+	long			nbr_philo;
 	long			start_time;
 	long			time_to_die;
 	long			time_to_eat;
@@ -71,7 +71,7 @@ int				init_philo(t_scene *scene);
 
 // UTILS
 unsigned int	ft_strlen(char *s);
-int				ft_atoi(char const *nptr);
+long			super_atoi(char const *input);
 void			ft_sleep(long time);
 long			get_time(void);
 void			print_philo_state(int id, char *action, t_scene *scene, \
