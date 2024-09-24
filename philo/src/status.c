@@ -27,14 +27,14 @@ void	update_death_status(t_scene *scene)
 
 int	is_dead(int i, t_scene *scene, long current_time, int *nbr_philos_out)
 {
-	long	death_time;
+	long	potential_death_time;
 	long	nbr_of_meals;
 
 	pthread_mutex_lock(&scene->philo[i].latest_meal_time_mtx);
-	death_time = scene->philo[i].latest_meal_time + scene->time_to_die;
+	potential_death_time = scene->philo[i].latest_meal_time + scene->time_to_die;
 	nbr_of_meals = scene->philo[i].nbr_meals_eaten;
 	pthread_mutex_unlock(&scene->philo[i].latest_meal_time_mtx);
-	if (death_time <= current_time)
+	if (potential_death_time <= current_time)
 	{
 		update_death_status(scene);
 		print_philo_state(i + 1, DIE, scene, 1);

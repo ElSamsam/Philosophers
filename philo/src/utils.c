@@ -50,23 +50,23 @@ int	ft_atoi(char const *nptr)
 	return (result * sign);
 }
 
-void	ft_sleep(long time)
+void	ft_sleep(long time_to_eat)
 {
 	long	entry_time;
 
 	entry_time = get_time();
-	usleep(time * 0.8 * 1000);
-	while(get_time() < time + entry_time)
+	usleep(time_to_eat * 1000 * 0.8);
+	while(get_time() < time_to_eat + entry_time)
 		usleep(100); // THIS VALUE MIGHT CHANGE FOR LATER ADJUSTMENTS i.e.: 50us
 	return ;
 }
 
 long	get_time(void)
 {
-	struct timeval	tv;
+	struct timeval	time_value;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
+	gettimeofday(&time_value, NULL);
+	return ((time_value.tv_sec * 1000) + (time_value.tv_usec / 1000));
 }
 
 void	print_philo_state(int id, char *action, t_scene *scene, int state)

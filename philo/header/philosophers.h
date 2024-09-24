@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/19 00:43:54 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/19 03:16:51 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ typedef struct s_philo
 	pthread_mutex_t	fork_mtx;
 	int				*next_fork;
 	pthread_mutex_t	*next_fork_mtx;
+	long			nbr_meals_eaten;
 	long			latest_meal_time;
 	pthread_mutex_t	latest_meal_time_mtx;
 	int				is_dead;
 	pthread_mutex_t	is_dead_mtx;
-	long			nbr_meals_eaten;
 }	t_philo;
 
 // SCENE
@@ -72,7 +72,7 @@ int		init_philo(t_scene *scene);
 // UTILS
 unsigned int	ft_strlen(char *s);
 int		ft_atoi(char const *nptr);
-void	ft_sleep(long time);
+void	ft_sleep(long time_to_eat);
 long	get_time(void);
 void	print_philo_state(int id, char *action, t_scene *scene, int state);
 

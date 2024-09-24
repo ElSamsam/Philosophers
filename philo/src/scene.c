@@ -25,6 +25,7 @@ void	eat(t_philo *philo)
 		{
 			philo->fork = 0;
 			fork_in_my_hand[0] = 1;
+			print_philo_state(philo->id, FORK, philo->scene, 0);
 		}
 		pthread_mutex_unlock(&philo->fork_mtx);
 		pthread_mutex_lock(philo->next_fork_mtx);
@@ -32,6 +33,7 @@ void	eat(t_philo *philo)
 		{
 			*(philo->next_fork) = 0;
 			fork_in_my_hand[1] = 1;
+			print_philo_state(philo->id, FORK, philo->scene, 0);
 		}
 		pthread_mutex_unlock(philo->next_fork_mtx);
 		usleep(200);
