@@ -6,7 +6,7 @@
 /*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/23 02:48:15 by saperrie         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:31:08 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,6 @@ void			ft_sleep(long time);
 long			get_time(void);
 void			print_philo_state(int id, char *action, t_scene *scene, \
 	int state);
+int				parse_user_input(int argc, char *argv[], t_scene *scene);
 
 #endif

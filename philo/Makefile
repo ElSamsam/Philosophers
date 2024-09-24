@@ -4,19 +4,19 @@ CC = cc
 INCLUDE_DIR = header/
 
 CFLAGS = -Wall -Wextra -Werror
-IFLAGS = -I$(INCLUDE_DIR) 
+IFLAGS = -I$(INCLUDE_DIR)
 DFLAGS = -MMD -MP
-LFLAGS = 
+LFLAGS =
 
 SRC_DIR = src
 OBJECT_DIR = .obj/
 
 OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(OBJECT_DIR)%.o,\
-				$(SRC_DIR)/free.c\
 				$(SRC_DIR)/init.c\
 				$(SRC_DIR)/scene.c\
 				$(SRC_DIR)/status.c\
 				$(SRC_DIR)/utils.c\
+				$(SRC_DIR)/utils1.c\
 				$(SRC_DIR)/main.c\
 			)
 
@@ -34,7 +34,7 @@ $(OBJECT_DIR)%.o: $(SRC_DIR)/%.c | $(OBJECT_DIR)
 	$(CC) $(CFLAGS) $(IFLAGS) $(DFLAGS) -o $@ -c $<
 
 $(OBJECT_DIR):
-	mkdir -p $(sort $(dir $(OBJECTS))) 
+	mkdir -p $(sort $(dir $(OBJECTS)))
 
 .PHONY: clean
 clean:
