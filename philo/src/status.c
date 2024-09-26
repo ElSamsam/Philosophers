@@ -86,6 +86,6 @@ void	status_check(t_scene *scene)
 				return ;
 			i += 1;
 		}
-		usleep(200);
+		usleep(50);
 	}
 }
