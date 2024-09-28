@@ -12,6 +12,17 @@
 
 #include "philosophers.h"
 
+void	free_scene(t_scene *scene, int errno)
+{
+	if (errno <= 4)
+		pthread_mutex_destroy(&(scene->stdout_mtx));
+	if (errno <= 5)
+		pthread_mutex_destroy(&(scene->good_init_mtx));
+	if (scene->philo)
+		free(scene->philo);
+	scene->philo = NULL;
+}
+
 void	free_all(int errno, int i, t_scene *scene)
 {
 	int	tmp;
@@ -35,11 +46,5 @@ void	free_all(int errno, int i, t_scene *scene)
 			pthread_mutex_destroy(&(scene->philo[i--].is_dead_mtx));
 		i = tmp;
 	}
-	if (errno <= 4)
-		pthread_mutex_destroy(&(scene->stdout_mtx));
-	if (errno <= 5)
-		pthread_mutex_destroy(&(scene->good_init_mtx));
-	if (scene->philo)
-		free(scene->philo);
-	scene->philo = NULL;
+	free_scene(scene, errno);
 }

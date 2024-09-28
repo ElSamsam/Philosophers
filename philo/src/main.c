@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:06:51 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/28 03:09:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/09/28 14:09:37 by saperrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	start_scene(t_scene *scene)
 		}
 		i += 1;
 	}
-	pthread_mutex_lock(&(scene->good_init_mtx));
 	scene->start_time = get_time();
+	pthread_mutex_lock(&(scene->good_init_mtx));
 	scene->good_init = 1;
 	pthread_mutex_unlock(&(scene->good_init_mtx));
 	status_check(scene);
