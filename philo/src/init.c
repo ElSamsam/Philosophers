@@ -30,12 +30,12 @@ int	init_philo(t_scene *scene)
 	while (i < scene->nbr_philo)
 	{
 		if (0 != pthread_mutex_init(&(scene->philo[i].fork_mtx), NULL))
-			return (free_all(0, i - 1, scene), 1);
+			return (free_all(1, i - 1, scene), 1);
 		if (0 != pthread_mutex_init(&(scene->philo[i].latest_meal_time_mtx), \
 			NULL))
-			return (free_all(1, i - 1, scene), 1);
-		if (0 != pthread_mutex_init(&(scene->philo[i].is_dead_mtx), NULL))
 			return (free_all(2, i - 1, scene), 1);
+		if (0 != pthread_mutex_init(&(scene->philo[i].is_dead_mtx), NULL))
+			return (free_all(3, i - 1, scene), 1);
 		if (i == scene->nbr_philo - 1)
 		{
 			scene->philo[i].next_fork = &(scene->philo[0].fork);
@@ -59,6 +59,9 @@ int	init_scene(t_scene *scene)
 	if (init_philo(scene) == 1)
 		return (1);
 	if (0 != pthread_mutex_init(&(scene->stdout_mtx), NULL))
-		return (free_all(3, scene->nbr_philo - 1, scene), 1);
+		return (free_all(4, scene->nbr_philo - 1, scene), 1);
+	if (0 != pthread_mutex_init(&(scene->good_init_mtx), NULL))
+		return (free_all(5, scene->nbr_philo - 1, scene), 1);
+	scene->good_init = 0;
 	return (0);
 }

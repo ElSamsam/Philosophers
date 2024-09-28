@@ -69,6 +69,16 @@ void	*routine(void *philosopher)
 	t_philo	*philo;
 
 	philo = philosopher;
+	while (1)
+	{
+		pthread_mutex_lock(&(philo->scene->good_init_mtx));
+		if (philo->scene->good_init == -1)
+			return (pthread_mutex_unlock(&(philo->scene->good_init_mtx)), NULL);
+		else if (philo->scene->good_init == 1)
+			break ;
+		pthread_mutex_unlock(&(philo->scene->good_init_mtx));
+	}
+	pthread_mutex_unlock(&(philo->scene->good_init_mtx));
 	print_philo_state(philo->id, THINK, philo->scene, 0);
 	if (philo->id % 2 != 0)
 		ft_sleep(0.8 * philo->scene->time_to_eat);

@@ -12,34 +12,6 @@
 
 #include "philosophers.h"
 
-void	free_all(int errno, int i, t_scene *scene)
-{
-	int	tmp;
-
-	tmp = i;
-	if (i != 0 && errno <= 1)
-	{
-		while (i <= 0)
-			pthread_mutex_destroy(&(scene->philo[i--].fork_mtx));
-		i = tmp;
-	}
-	if (i != 0 && errno <= 2)
-	{
-		while (i <= 0)
-			pthread_mutex_destroy(&(scene->philo[i--].latest_meal_time_mtx));
-		i = tmp;
-	}
-	if (i != 0 && errno <= 3)
-	{
-		while (i <= 0)
-			pthread_mutex_destroy(&(scene->philo[i--].is_dead_mtx));
-		i = tmp;
-	}
-	if (errno <= 4)
-		pthread_mutex_destroy(&(scene->stdout_mtx));
-	free(scene->philo);
-}
-
 int	parse_user_input(int argc, char *argv[], t_scene *scene)
 {
 	char	*s;
@@ -59,7 +31,7 @@ int	parse_user_input(int argc, char *argv[], t_scene *scene)
 		|| scene->time_to_eat == -4000000000 || scene->time_to_eat <= 0 \
 		|| scene->time_to_sleep == -4000000000 || scene->time_to_sleep <= 0 \
 		|| scene->nbr_of_meals == -4000000000 || scene->nbr_of_meals == -1 \
-		|| scene->nbr_of_meals == 0)
-		return (write(2, "no null values please\n", 22), 1);
+		|| scene->nbr_of_meals == 0 || scene->nbr_philo > 200)
+		return (write(2, "wrong input\n", 12), 1);
 	return (0);
 }

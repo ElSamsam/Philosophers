@@ -17,6 +17,7 @@ OBJECTS = $(patsubst $(SRC_DIR)/%.c,$(OBJECT_DIR)%.o,\
 				$(SRC_DIR)/status.c\
 				$(SRC_DIR)/utils.c\
 				$(SRC_DIR)/utils1.c\
+				$(SRC_DIR)/free.c\
 				$(SRC_DIR)/main.c\
 			)
 

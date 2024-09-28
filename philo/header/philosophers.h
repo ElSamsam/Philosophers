@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philosophers.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saperrie <saperrie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 19:00:12 by saperrie          #+#    #+#             */
-/*   Updated: 2024/09/24 14:31:08 by saperrie         ###   ########.fr       */
+/*   Updated: 2024/09/27 23:32:16 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct s_scene
 	long			time_to_sleep;
 	long			nbr_of_meals;
 	pthread_mutex_t	stdout_mtx;
+	int				good_init;
+	pthread_mutex_t	good_init_mtx;
 }	t_scene;
 
 typedef struct s_philo
